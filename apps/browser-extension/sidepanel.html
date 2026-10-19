@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Robot Orchestra</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header>
+      <img src="icon-48.png" alt="" />
+      <div class="brand">
+        <strong>Robot Orchestra</strong><small>Browser copilot</small>
+      </div>
+      <span
+        class="connection"
+        id="connection"
+        title="Desktop app connection"
+      ></span>
+    </header>
+    <main>
+      <div class="eyebrow">CURRENT TAB</div>
+      <div id="tab-card" class="tab-card">
+        <span class="tab-icon">◉</span>
+        <div>
+          <b id="tab-title">Loading active page…</b
+          ><small id="tab-url"
+            >Browser page context stays in this panel until you share it.</small
+          >
+        </div>
+      </div>
+      <div class="share-row">
+        <button id="share" class="secondary">Share current page</button>
+        <span id="share-status" role="status"></span>
+      </div>
+
+      <section class="scan-card" aria-labelledby="scan-title">
+        <div class="scan-heading">
+          <div>
+            <div class="eyebrow">SITE SCAN</div>
+            <h2 id="scan-title">Read across this site</h2>
+          </div>
+          <span class="scan-mark">⌕</span>
+        </div>
+        <p>
+          On your click, request access to this site and read up to
+          <b>50 same-origin pages</b>. GET requests only; no buttons, forms, or
+          page actions.
+        </p>
+        <div class="scan-controls">
+          <label for="max-pages">Page limit</label>
+          <select id="max-pages">
+            <option value="10">10 pages</option>
+            <option value="25" selected>25 pages</option>
+            <option value="50">50 pages</option>
+          </select>
+          <button id="scan" class="scan-button">Scan this site</button>
+          <button id="cancel-scan" class="cancel-button" hidden>Stop</button>
+        </div>
+        <div class="scan-consent">
+          Tip: right-click a regular webpage and choose
+          <b>Scan this site with Robot Orchestra…</b> to open this panel here.
+          Chrome/Edge asks for this site's permission (it remains until revoked
+          in extension settings). GET-only reads may use your signed-in session.
+          The scan checks <code>robots.txt</code>, stays on this origin without
+          following redirects, and keeps text here until you choose to attach it.
+        </div>
+        <div id="scan-status" class="scan-status" role="status">
+          No scan running.
+        </div>
+        <progress id="scan-progress" max="25" value="0" hidden></progress>
+        <div id="scan-results" class="scan-results" hidden>
+          <div class="scan-summary">
+            <b id="scan-summary-title">Scan ready</b
+            ><button id="clear-scan" class="clear-scan" type="button">
+              Clear
+            </button>
+          </div>
+          <div id="scan-pages" class="scan-pages"></div>
+          <div class="save-scan-row">
+            <button id="save-scan" class="secondary" type="button">Save scan to local Brain</button>
+            <span id="save-scan-status" role="status"></span>
+          </div>
+          <label class="include-scan"
+            ><input id="include-scan" type="checkbox" /><span
+              ><b>Include this scan in my next message</b
+              ><small
+                >Only the text preview below is sent to the selected model, capped at 12,000
+                characters.</small
+              ></span
+            ></label
+          >
+        </div>
+      </section>
+
+      <div class="divider"></div>
+      <div class="eyebrow">ASK YOUR COPILOT</div>
+      <h1>What would you like help with?</h1>
+      <p class="explain">
+        Without a selected scan, only the current tab URL and text you
+        deliberately select are attached. Choose <b>Send task</b> to submit.
+      </p>
+      <div id="thread" class="thread" aria-live="polite">
+        <div class="bubble assistant">
+          Ready when you are. The desktop Brain model setting routes this task:
+          Ollama runs directly on this PC; other choices use Hermes.
+        </div>
+      </div>
+      <form id="ask-form">
+        <textarea
+          id="prompt"
+          rows="4"
+          placeholder="Ask about this page, the scan, or describe a task…"
+          required
+        ></textarea>
+        <div class="composer-foot">
+          <span>Sent through your local computer</span
+          ><button id="ask" type="submit">
+            Send task <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </form>
+      <a class="open-app" href="http://127.0.0.1:4178/" target="_blank"
+        >Open desktop orchestra <span>↗</span></a
+      >
+      <p class="privacy">
+        <span>◇</span> No background page reading. Site scans require a separate
+        permission click and stay within this site's origin.
+      </p>
+    </main>
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+{
+  "name": "robot-orchestra-desktop",
+  "version": "0.6.0",
+  "private": true,
+  "description": "Windows desktop copilot for Robot Heads with a Chrome and Edge companion",
+  "author": "Fayaz Ahmed",
+  "license": "MIT",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node test/local-api.test.cjs",
+    "test:knowledge": "node --test test/knowledge-base.test.cjs",
+    "test:ollama": "node --test test/ollama-client.test.cjs",
+    "test:voice": "node --test test/voice-protocol.test.mjs",
+    "test:crawler": "node --test ../browser-extension/test/crawler.test.mjs",
+    "dist:win": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "^36.5.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "ai.robotheads.orchestra",
+    "productName": "Robot Orchestra",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.cjs",
+      "brain-state.cjs",
+      "knowledge-base.cjs",
+      "ollama-client.cjs",
+      "preload.cjs",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../../site/dist",
+        "to": "site/dist"
+      },
+      {
+        "from": "native-host-publish",
+        "to": "native-host"
+      },
+      {
+        "from": "register-native-host.ps1",
+        "to": "native-host/register-native-host.ps1"
+      },
+      {
+        "from": "../browser-extension/EXTENSION_ID",
+        "to": "native-host/EXTENSION_ID"
+      },
+      {
+        "from": "../browser-extension",
+        "to": "browser-extension",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "Robot-Orchestra-Setup-${version}-${arch}.${ext}",
+      "icon": "app-icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": false,
+      "runAfterFinish": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "include": "installer.nsh"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EdgeAgent/robot-orchestra"
+  },
+  "dependencies": {
+    "pdfjs-dist": "^6.4.299"
+  }
+}

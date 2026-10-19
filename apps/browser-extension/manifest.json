@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Robot Orchestra \u2014 Browser Companion",
+  "version": "0.3.0",
+  "description": "Right-click to explicitly scan a bounded number of pages on the current site and chat with Hermes.",
+  "permissions": ["activeTab", "scripting", "nativeMessaging", "sidePanel", "contextMenus", "storage"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "action": {
+    "default_title": "Open Robot Orchestra"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoYc3wvc0KslO8908KGb/PhgwLC9xujOSJKHHkC3TSWKf3ei47Px48Nl7sF4n0o3WmzSzmdDv9EmGEZYQss5Ql5H7wHI+zUNHOAEUT+5pzvF69ah87f1qA4YO6/4SXyHidi+rd6oWM8fZSODvmeSxloJ9QWL56MCVP59d3DgPiPjyk6/HZW5z3l4mQrsiMUdgD8SBAyBVLY18mqHh/QdY+eOGI4Tq46dUunWJQ3FF2IZAE/pVGuq2tAzlsK2tI9RDCpvP/YobrlEkL1BlPTnfa7vVdB9wTa4gS5bdlkzmhP5n7Nu3Lcsv8tKei9Btw+SX6kNKU3sCzYXDSsCkTcDPKwIDAQAB"
+}

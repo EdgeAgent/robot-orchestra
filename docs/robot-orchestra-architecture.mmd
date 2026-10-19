@@ -1,0 +1,57 @@
+%%{init: {"theme":"base","themeVariables":{"background":"#101116","primaryColor":"#1c2431","primaryTextColor":"#f2f1ff","primaryBorderColor":"#7168b7","lineColor":"#8d85d5","secondaryColor":"#192b29","tertiaryColor":"#29273a","clusterBkg":"#171922","clusterBorder":"#464454","edgeLabelBackground":"#101116","fontFamily":"Inter, Segoe UI, sans-serif","fontSize":"18px"}}}%%
+flowchart TB
+  USER([You])
+
+  subgraph LOCAL["Windows desktop · local-first app"]
+    UI["React dashboard + floating robot copilot"]
+    MAIN["Electron main process<br/>loopback API · safe IPC · tray · hotkey"]
+    HOST[".NET Native Messaging host"]
+    BRAIN[("Brain state<br/>goals · ideas · activity · artifacts")]
+    KNOW[("Local Knowledge index<br/>extracted document text")]
+    ROUTER{"Selected-model router"}
+    OLLAMA["Ollama<br/>127.0.0.1:11434 · direct local"]
+    HERMES["User-configured Hermes adapter<br/>loopback only"]
+    UI <-->|"context-isolated IPC / local API"| MAIN
+    MAIN --> BRAIN
+    MAIN --> KNOW
+    MAIN --> ROUTER
+    ROUTER -->|"direct · no agents"| OLLAMA
+    ROUTER -->|"delegated task"| HERMES
+    HOST -->|"loopback bridge"| MAIN
+  end
+
+  subgraph BROWSER["Chrome / Edge · user-triggered"]
+    TAB["Active tab / same-origin site"]
+    EXT["Robot Orchestra side panel"]
+    PREVIEW["Scan preview<br/>user selects whether to attach"]
+    TAB -->|"explicit share or bounded scan"| EXT
+    EXT --> PREVIEW
+  end
+
+  subgraph PROVIDERS["Provider / optional services"]
+    OPENROUTER["OpenRouter<br/>selected zero-price model · availability varies"]
+    AGENTS["Hermes-configured specialists<br/>Scout · Builder · Reviewer"]
+    HF["Optional Hugging Face<br/>Realtime speech server"]
+  end
+
+  USER --> UI
+  EXT -->|"Native Messaging"| HOST
+  PREVIEW -->|"only after explicit send"| ROUTER
+  HERMES --> OPENROUTER
+  HERMES --> AGENTS
+  MIC["Microphone<br/>enabled only after Talk"] --> HF
+  HF -->|"recognized task"| ROUTER
+
+  classDef local fill:#1c2431,stroke:#7168b7,color:#f2f1ff,stroke-width:1.4px;
+  classDef data fill:#192b29,stroke:#43a98a,color:#e6fff5,stroke-width:1.3px;
+  classDef route fill:#2a2740,stroke:#a49aff,color:#f2eeff,stroke-width:1.6px;
+  classDef browser fill:#1d2932,stroke:#4b9db8,color:#ebfbff,stroke-width:1.3px;
+  classDef external fill:#29232d,stroke:#b66f8a,color:#fff0f7,stroke-width:1.3px;
+  class UI,MAIN,HOST local;
+  class BRAIN,KNOW data;
+  class ROUTER,OLLAMA,HERMES route;
+  class TAB,EXT,PREVIEW browser;
+  class OPENROUTER,AGENTS,HF,MIC external;
+  style LOCAL fill:#13151c,stroke:#5a5577,color:#f0eff8,stroke-width:2px
+  style BROWSER fill:#121e26,stroke:#4b9db8,color:#ebfbff,stroke-width:2px
+  style PROVIDERS fill:#19141d,stroke:#946077,color:#fff0f7,stroke-width:2px
