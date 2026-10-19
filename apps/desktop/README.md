@@ -162,7 +162,7 @@ node --test apps/desktop/test/ollama-client.test.cjs
 node --test apps/browser-extension/test/crawler.test.mjs
 ```
 
-A Windows packaging workflow is defined in [`.github/workflows/windows-desktop.yml`](../../.github/workflows/windows-desktop.yml). Signing and browser-store publishing are not included. Live voice is an optional client integration; the Hugging Face speech-to-speech model server is not bundled in the installer.
+The desktop build uses electron-builder's per-user NSIS target. Signing and browser-store publishing are not included. Live voice is an optional client integration; the Hugging Face speech-to-speech model server is not bundled in the installer.
 
 ## Technical overview
 
