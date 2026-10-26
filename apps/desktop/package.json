@@ -13,7 +13,8 @@
     "test:ollama": "node --test test/ollama-client.test.cjs",
     "test:voice": "node --test test/voice-protocol.test.mjs",
     "test:crawler": "node --test ../browser-extension/test/crawler.test.mjs",
-    "dist:win": "electron-builder --win nsis --x64"
+    "dist:win": "electron-builder --win nsis --x64",
+    "test:voice-control": "node --test test/voice-control.test.cjs"
   },
   "devDependencies": {
     "electron": "^36.5.0",
@@ -31,7 +32,9 @@
       "knowledge-base.cjs",
       "ollama-client.cjs",
       "preload.cjs",
-      "package.json"
+      "package.json",
+      "voice-control.cjs",
+      "agent-screens.cjs"
     ],
     "extraResources": [
       {
