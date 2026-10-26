@@ -72,6 +72,18 @@ function createVoiceWiring(options) {
   function say(text) {
     if (typeof opts.onMessage === "function") opts.onMessage(String(text || ""));
   }
+  // AUDIT FIX: screen commands must resolve role names, not just numbers.
+  // Before this fix, "Show Outreach" / "Stop Research" failed because
+  // screens are stored as agent-1 / agent-2, not as "outreach" / "research".
+  function resolveAgentId(target) {
+    const t = String(target || "").toLowerCase().trim();
+    if (t.startsWith("agent-")) return t;
+    if (t.startsWith("agent ")) return t.replace("agent ", "agent-");
+    for (const agent of config.agents) {
+      if (agent.names.map((n) => n.toLowerCase()).includes(t)) return agent.id;
+    }
+    return t;
+  }
 
   function wake(transcript) {
     if (!containsWakeWord(transcript, config.wakeWord)) return { woke: false, headState };
@@ -117,15 +129,15 @@ function createVoiceWiring(options) {
         return { ok: true, action: "show-all", screens: listScreens(screens), headState };
       }
       if (screenCmd.type === "show") {
-        const target = screenCmd.target.replace("agent ", "agent-");
-        const screen = getScreen(screens, target) || getScreen(screens, screenCmd.target);
+        const target = resolveAgentId(screenCmd.target);
+        const screen = getScreen(screens, target);
         emitHead("speaking");
         if (!screen) { say(`No screen for ${screenCmd.target} yet.`); return { ok: false, error: `No screen for ${screenCmd.target}.`, headState }; }
         say(`${screen.id} is ${screen.status} on ${screen.job || "no job"}.`);
         return { ok: true, action: "show", screen: listScreens(screens).find((s) => s.id === screen.id), headState };
       }
       if (screenCmd.type === "pause") {
-        const target = screenCmd.target.replace("agent ", "agent-");
+        const target = resolveAgentId(screenCmd.target);
         const screen = pauseScreen(screens, target);
         emitHead("idle");
         if (!screen) return { ok: false, error: `No screen for ${screenCmd.target}.`, headState };
@@ -139,7 +151,7 @@ function createVoiceWiring(options) {
           say("All agents stopped.");
           return { ok: true, action: "stop-all", screens: listScreens(screens), headState };
         }
-        const target = screenCmd.target.replace("agent ", "agent-");
+        const target = resolveAgentId(screenCmd.target);
         const screen = stopScreen(screens, target);
         emitHead("stop");
         if (!screen) return { ok: false, error: `No screen for ${screenCmd.target}.`, headState };
