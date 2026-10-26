@@ -40,9 +40,11 @@ const DEFAULT_CONFIG = Object.freeze({
   // Agent names are config, not hard-coded. Role names route cleaner than
   // numbers once there are more than three screens, but numbers work too.
   agents: Object.freeze([
-    Object.freeze({ id: "agent-1", names: ["agent 1", "agent one", "outreach"] }),
-    Object.freeze({ id: "agent-2", names: ["agent 2", "agent two", "research"] }),
-    Object.freeze({ id: "agent-3", names: ["agent 3", "agent three", "builder"] }),
+    // Role names first, numbers as aliases. "Outreach, do it" and
+    // "Agent 1, do it" route to the same screen, role name wins in speech.
+    Object.freeze({ id: "agent-1", names: ["outreach", "agent 1", "agent one"] }),
+    Object.freeze({ id: "agent-2", names: ["research", "agent 2", "agent two"] }),
+    Object.freeze({ id: "agent-3", names: ["builder", "agent 3", "agent three"] }),
   ]),
   // Local-only voice endpoints. Never point these at a remote wss:// you
   // do not trust, and never start the mic on launch.
