@@ -45,6 +45,19 @@ test("wiring: risky job is cancelled on no", () => {
   assert.equal(w.listScreens().length, 0);
 });
 
+test("wiring: screen commands work by role name, not just Agent numbers (audit fix)", () => {
+  const { w } = wiring();
+  w.handleCommand("Outreach, do outreach");
+  w.handleCommand("Research, research competitors");
+  const shown = w.handleCommand("Show Outreach");
+  assert.equal(shown.ok, true);
+  assert.equal(shown.screen.id, "agent-1");
+  const stopped = w.handleCommand("Stop Research");
+  assert.equal(stopped.ok, true);
+  assert.equal(w.listScreens().find((s) => s.id === "agent-2").status, "stopped");
+  assert.equal(w.listScreens().find((s) => s.id === "agent-1").status, "running");
+});
+
 test("wiring: stop one screen leaves the other running", () => {
   const { w } = wiring();
   w.handleCommand("Agent 1, do outreach");
