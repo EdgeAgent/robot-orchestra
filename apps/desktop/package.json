@@ -14,7 +14,8 @@
     "test:voice": "node --test test/voice-protocol.test.mjs",
     "test:crawler": "node --test ../browser-extension/test/crawler.test.mjs",
     "dist:win": "electron-builder --win nsis --x64",
-    "test:voice-control": "node --test test/voice-control.test.cjs"
+    "test:voice-control": "node --test test/voice-control.test.cjs",
+    "test:voice-wiring": "node --test test/voice-wiring.test.cjs"
   },
   "devDependencies": {
     "electron": "^36.5.0",
@@ -34,7 +35,8 @@
       "preload.cjs",
       "package.json",
       "voice-control.cjs",
-      "agent-screens.cjs"
+      "agent-screens.cjs",
+      "voice-wiring.cjs"
     ],
     "extraResources": [
       {

@@ -12,4 +12,16 @@ contextBridge.exposeInMainWorld("orchestraDesktop", {
     ipcRenderer.on("companion:state", listener);
     return () => ipcRenderer.removeListener("companion:state", listener);
   },
+  voiceCommand: (command) => ipcRenderer.send("voice:command", command),
+  voiceWake: (transcript) => ipcRenderer.send("voice:wake", transcript),
+  onVoiceState: (callback) => {
+    const listener = (_event, state) => callback(state);
+    ipcRenderer.on("voice:state", listener);
+    return () => ipcRenderer.removeListener("voice:state", listener);
+  },
+  onVoiceResult: (callback) => {
+    const listener = (_event, result) => callback(result);
+    ipcRenderer.on("voice:result", listener);
+    return () => ipcRenderer.removeListener("voice:result", listener);
+  },
 });
