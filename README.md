@@ -23,8 +23,13 @@
 </p>
 
 <p align="center">
+  <img src="site/public/robot-orchestra-head.png" alt="The actual minimized floating Robot Orchestra head — blue shell, lavender trim, LED-matrix face, idle" width="320" /><br />
+  <em>The actual floating head — this is the real RobotHead from the app, minimized, idle. Drag it anywhere, tap Ctrl+1 to chat.</em>
+</p>
+
+<p align="center">
   <img src="site/public/robot-orchestra-companion.png" alt="Floating Robot Orchestra chat head — expanded chat dock with Chat, Tasks, Feed, Ideas, Goals and Artifacts" width="320" /><br />
-  <em>The floating chat head — tap Ctrl+1 to open this chat dock, drag the head anywhere on your desktop.</em>
+  <em>Tap Ctrl+1 and it expands into this chat dock — Chat, Tasks, Feed, Ideas, Goals and Artifacts.</em>
 </p>
 
 <p align="center">
