@@ -23,6 +23,11 @@
 </p>
 
 <p align="center">
+  <img src="site/public/robot-orchestra-companion.png" alt="Floating Robot Orchestra chat head — expanded chat dock with Chat, Tasks, Feed, Ideas, Goals and Artifacts" width="320" /><br />
+  <em>The floating chat head — tap Ctrl+1 to open this chat dock, drag the head anywhere on your desktop.</em>
+</p>
+
+<p align="center">
   <a href="apps/desktop/README.md"><strong>Windows install & setup</strong></a> ·
   <a href="https://github.com/EdgeAgent/robot-orchestra/releases/latest"><strong>Download Windows installer</strong></a> ·
   <a href="https://github.com/EdgeAgent/robot-orchestra/releases"><strong>All releases</strong></a> ·
