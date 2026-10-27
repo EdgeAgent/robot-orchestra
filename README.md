@@ -14,8 +14,6 @@
   <a href="https://github.com/EdgeAgent/robot-orchestra/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/EdgeAgent/robot-orchestra?style=flat-square&color=f4bd50" /></a>
 </p>
 
-<p align="center"><img src="apps/desktop/app-icon.png" alt="Robot Orchestra desktop app icon" width="96" /></p>
-
 <p align="center">
   <strong>A friendly multi-agent desktop copilot — plus animated robot avatars for React.</strong><br />
   Float the character, keep the next move in view, scan a site when you ask, and keep your agent bridge on your own machine.<br />
