@@ -37,6 +37,7 @@ const {
   chatOllama,
   parseModelChoice,
 } = require("./ollama-client.cjs");
+const { createVoiceWiring } = require("./voice-wiring.cjs");
 
 const PORT = Number(process.env.ORCHESTRA_PORT || 4178);
 const ROOT = app.isPackaged
@@ -58,6 +59,36 @@ let brainState = defaultBrainState();
 let knowledgeStore = emptyKnowledgeStore();
 let brainPulseRunning = false;
 let brainTimer;
+// Voice control wiring (voice-control-v1). Mic is NOT auto-started:
+// voiceWiring is fed transcripts only after Kevin enables voice in the UI
+// and a local STT server (Moonshine / Faster-Whisper on loopback) is up.
+// Head state is broadcast to the companion + dashboard windows.
+let voiceWiring = null;
+function broadcastVoiceState() {
+  if (!voiceWiring) return;
+  const payload = {
+    headState: voiceWiring.headState,
+    voiceEnabled: voiceWiring.voiceEnabled,
+    pendingApproval: voiceWiring.pendingApproval,
+    screens: voiceWiring.listScreens(),
+  };
+  for (const window of [companionWindow, dashboardWindow]) {
+    if (window && !window.isDestroyed())
+      window.webContents.send("voice:state", payload);
+  }
+  return payload;
+}
+function initVoiceWiring() {
+  if (voiceWiring) return voiceWiring;
+  voiceWiring = createVoiceWiring({
+    onHeadState: () => broadcastVoiceState(),
+    onMessage: (text) => {
+      addCompanionMessage("assistant", text);
+      broadcastVoiceState();
+    },
+  });
+  return voiceWiring;
+}
 let lastUserTaskAt = 0;
 const companionMessages = [
   {
@@ -277,6 +308,7 @@ function configureCompanionMediaPermissions() {
   });
 }
 function startServer() {
+  initVoiceWiring();
   configureCompanionMediaPermissions();
   configPath = path.join(app.getPath("userData"), "desktop-config.json");
   brainPath = path.join(app.getPath("userData"), "brain-state.json");
@@ -883,6 +915,30 @@ function startServer() {
         });
         return res.end(body.slice(0, 1024 * 1024));
       }
+      // Voice control wiring (voice-control-v1). Same-origin desktop UI only.
+      // Transcripts are fed here by a local STT server or the UI; the mic
+      // is never auto-started by this endpoint, and risky jobs still pause
+      // for a voice "yes" (see voice-wiring.cjs).
+      if (url.pathname === "/api/voice/status" && req.method === "GET")
+        return json(res, 200, broadcastVoiceState());
+      if (url.pathname === "/api/voice/wake" && req.method === "POST") {
+        const data = await readJson(req);
+        const result = initVoiceWiring().wake(String(data.transcript || ""));
+        return json(res, 200, { ...result, state: broadcastVoiceState() });
+      }
+      if (url.pathname === "/api/voice/command" && req.method === "POST") {
+        const data = await readJson(req);
+        const result = initVoiceWiring().handleCommand(String(data.command || data.transcript || ""));
+        broadcastVoiceState();
+        return json(res, result.ok ? 200 : 409, { ...result, state: broadcastVoiceState() });
+      }
+      if (url.pathname === "/api/voice/enable" && req.method === "POST") {
+        const data = await readJson(req);
+        initVoiceWiring().setVoiceEnabled(data.enabled === true);
+        return json(res, 200, { ok: true, state: broadcastVoiceState() });
+      }
+      if (url.pathname === "/api/voice/screens" && req.method === "GET")
+        return json(res, 200, { screens: initVoiceWiring().listScreens() });
       if (req.method === "GET" && url.pathname === "/")
         return serveFile(res, path.join(ROOT, "index.html"));
       if (req.method === "GET") {
@@ -1121,6 +1177,20 @@ function registerDesktopControls() {
   });
   ipcMain.on("companion:drag-end", (event) => {
     if (isTrustedCompanionControl(event)) companionDragStart = null;
+  });
+  // Voice control from the head UI. Trusted companion window only; the
+  // same approval gate applies here as on the HTTP route.
+  ipcMain.on("voice:command", (event, command) => {
+    if (!isTrustedCompanionControl(event)) return;
+    const result = initVoiceWiring().handleCommand(String(command || ""));
+    broadcastVoiceState();
+    event.sender.send("voice:result", result);
+  });
+  ipcMain.on("voice:wake", (event, transcript) => {
+    if (!isTrustedCompanionControl(event)) return;
+    const result = initVoiceWiring().wake(String(transcript || ""));
+    broadcastVoiceState();
+    event.sender.send("voice:result", result);
   });
   const keepCompanionOnScreen = () => {
     if (!companionWindow || companionWindow.isDestroyed()) return;

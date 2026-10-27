@@ -18,7 +18,8 @@
 
 <p align="center">
   <strong>A friendly multi-agent desktop copilot — plus animated robot avatars for React.</strong><br />
-  Float the character, keep the next move in view, scan a site when you ask, and keep your agent bridge on your own machine.
+  Float the character, keep the next move in view, scan a site when you ask, and keep your agent bridge on your own machine.<br />
+  <strong>Now with voice control + multi-screen sandbox:</strong> talk to the head, it delegates to agents by name, and you watch each agent work live on its own screen.
 </p>
 
 <p align="center">
@@ -46,6 +47,23 @@ The Brain also includes a **local Knowledge library** for PDF, DOCX, XLSX/XLSM, 
   <em>Persistent Brain, with a six-section floating companion.</em><br />
   <img src="site/public/robot-orchestra-companion.png" alt="Floating Robot Orchestra chat head with Chat, Tasks, Feed, Ideas, Goals and Artifacts dock" width="320" />
 </p>
+
+## Voice control + multi-screen sandbox — new in this release
+
+The floating head is the main agent. Voice is the control layer, screens are for watching.
+
+- **Talk to it:** say any wake word you choose (default: "robot"), then talk normally. The head listens, thinks, and talks back — mouth moving, lights, smile — no lip-sync needed, and the mic never auto-starts.
+- **Delegate by name or role:** "Outreach, draft outreach for London plumbers" goes to Agent 1. "Research, research competitors" goes to Agent 2. "Agent 1", "Agent 2", "Agent 3" still work as aliases. No name? The Boss picks by job.
+- **Watch live:** each agent gets its own sandbox screen inside Orchestra's own desktop environment — its own browser, its own terminal, its own log, its own live view (noVNC, loopback only). Say "Show Outreach" to pop that screen up, "Show all agents" to see them all, "Stop Research" to stop just that one.
+- **Approval gate, always:** send, ship, pay, or delete pauses and asks you by voice, with the exact job spoken back. Say "yes" to approve, "no" to cancel. No agent, no model, no learned rule can skip it.
+- **Sandbox host:** on Windows, agents run inside WSL2 (Hyper-V fallback), not on your main desktop. Agent 1 → `http://127.0.0.1:6081/vnc.html`, Agent 2 → `6082`, and so on. If a stream fails, that agent pauses — it never runs blind.
+- **Local voice server:** Moonshine (or Faster-Whisper) for speech-to-text, Piper for speech output, on `http://127.0.0.1:8765` only. No audio ever leaves your machine. Run `apps/desktop/scripts/setup-wsl2-sandbox.ps1` as Administrator to set up the WSL2 host, then start the voice server in WSL2.
+- **Try it without a mic:** `node apps/desktop/demo-m1.cjs` runs the M1 rehearsal — one agent, one screen, plus the parallel killer demo (Outreach drafts + Research in parallel, batch approval) — with no sends, ever.
+- **Free-model guard:** jobs stay narrow, retry once, then escalate to you. No endless loops, no faked success.
+
+Full reference pack: [`docs/voice-multi-screen-reference.md`](docs/voice-multi-screen-reference.md). Audit (bugs found, live risks, what the live run needs): [`apps/desktop/AUDIT.md`](apps/desktop/AUDIT.md).
+
+> **Honest status:** the voice logic, wiring, screens, sandbox host, and tests (19/19) are in this release. The live run on a Windows PC — real mic, real WSL2 sandbox stream, real SPACE — is the final proof step, and it needs the setup above. The original app on main still works exactly as before if you don't enable voice.
 
 ## Architecture map
 
@@ -85,6 +103,7 @@ The microphone is never started on launch or connection. Raw audio is sent direc
 - **Explicit website scans:** Chrome/Edge asks for per-origin permission only after you click scan; reads at most 50 HTML pages, stays on the original site, does GET only, checks `robots.txt`, and limits each page to 800 KB and extracted text to 12,000 characters sent with an explicitly selected scan. Same-origin reads may use your signed-in browser session. Nothing is sent to a model until you check the handoff option and press **Send task**; the Brain model setting selects direct Ollama or Hermes.
 - **Agent handoff:** OpenRouter task models go to your local Hermes coordinator with Scout, Builder and Reviewer offered as specialist delegates; real delegation depends on your Hermes adapter. Ollama mode is direct inference and does not delegate.
 - **Live voice (optional):** Hugging Face's OpenAI-Realtime-compatible speech server handles speech recognition and speech output; the recognized task uses the selected Ollama or Hermes/OpenRouter route. Microphone permission is restricted to audio from the app's own loopback renderer. The speech server is installed and run separately.
+- **Voice control + multi-screen sandbox (new):** talk to the head, delegate by role ("Outreach", "Research", "Builder") or Agent number, watch each agent live on its own WSL2 sandbox screen, and approve sends/ships/pays/deletes by voice. See the section above.
 - **Browser side panel:** explicitly share one page or choose a same-origin 10/25/50-page scan. Per-origin host permission is requested on click; `robots.txt`, `noindex`/`nofollow`, a no-redirect origin lock, byte/depth/time caps, and a separate preview/attach step bound the crawl. Page GETs may use the browser's existing session; nothing is sent to a model until you opt into the scan and submit a task.
 - **OpenRouter:** discover zero-price models for Hermes delegation. Free model availability and provider limits may change. Ollama is a separate direct-local route.
 - **Optional Jev routing:** ask Jev to choose one agent/model from supplied allowlists. Jev uses its own API key.
