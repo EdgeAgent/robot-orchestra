@@ -561,22 +561,31 @@
 .companion-teamline {
   order: 1;
 }
+.companion-model-control,
+.companion-model-route-note,
+.companion-model-notice {
+  order: 2;
+}
 .companion-feed,
 .companion-work-panel {
-  order: 2;
+  order: 3;
 }
 .companion-context-toggle,
 .companion-error {
-  order: 3;
-}
-.companion-compose {
   order: 4;
 }
-.companion-tabbar {
+.companion-next-wrap,
+.hf-voice-panel {
   order: 5;
 }
-.companion-foot {
+.companion-compose {
   order: 6;
+}
+.companion-tabbar {
+  order: 7;
+}
+.companion-foot {
+  order: 8;
 }
 .companion-tabbar {
   flex: none;
@@ -644,8 +653,9 @@
 .companion-tabbar button.active span { color: #f2f2f4; }
 .companion-tab-count {
   position: absolute;
-  top: 3px;
-  right: 7px;
+  top: 2px;
+  right: 10px;
+  pointer-events: none;
   min-width: 13px;
   height: 13px;
   display: grid;
@@ -1093,3 +1103,16 @@
   font-size: 8px;
   cursor: pointer;
 }
+
+/* Dock cleanup: next-move is a one-line toggle until tapped; the
+   suggestion itself, and its tap-to-use action, are unchanged. */
+.companion-next-wrap { flex: none; margin: 8px 10px 0; }
+.companion-next-toggle { width: 100%; display: flex; align-items: center; gap: 8px; padding: 9px 11px; border: 1px solid #49446d; border-radius: 9px; background: linear-gradient(120deg,#27253a,#1b1c24); color: #e9e8f6; text-align: left; cursor: pointer; }
+.companion-next-toggle span { flex: none; color: #aaa2ff; font: 8px var(--mono); letter-spacing: .8px; }
+.companion-next-toggle b { flex: 1; min-width: 0; overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.companion-next-wrap .companion-inline-next { margin: 6px 0 0; width: 100%; }
+/* Actionable adapter message: reuses the existing dashboard button.
+   It opens the dashboard (Bridge setup lives there); it does not
+   connect, test, or change anything by itself. */
+.companion-banner-action { margin-top: 8px; padding: 7px 10px; border: 1px solid #c99759; border-radius: 7px; background: #2e2416; color: #f0c98a; font-size: 10px; cursor: pointer; }
+.companion-banner-action:hover { background: #3d2f1c; }

@@ -1719,12 +1719,12 @@ html.companion-window-mode #root {
   gap: 4px;
 }
 .companion-brand b {
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 1.25px;
 }
 .companion-brand small {
   color: #9da1ae;
-  font-size: 9px;
+  font-size: 10px;
 }
 .companion-brand small i {
   display: inline-block;
@@ -1766,7 +1766,7 @@ html.companion-window-mode #root {
   padding: 0 13px;
   border-bottom: 1px solid #ffffff0a;
   color: #9398a7;
-  font: 7px var(--mono);
+  font: 8px var(--mono);
   letter-spacing: 0.45px;
 }
 .companion-teamline > span:not(.companion-status-dot):not(.companion-team-sep) {
@@ -1848,8 +1848,8 @@ html.companion-window-mode #root {
 .companion-message p {
   margin: 0;
   color: #dcdee7;
-  font-size: 11px;
-  line-height: 1.55;
+  font-size: 13px;
+  line-height: 1.6;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
@@ -1950,16 +1950,16 @@ html.companion-window-mode #root {
 }
 .companion-compose textarea {
   width: 100%;
-  min-height: 42px;
-  max-height: 104px;
+  min-height: 48px;
+  max-height: 120px;
   resize: vertical;
   border: 0;
   outline: 0;
   padding: 2px;
   background: transparent;
   color: #e6e7ee;
-  font-size: 10px;
-  line-height: 1.45;
+  font-size: 13px;
+  line-height: 1.5;
 }
 .companion-compose textarea::placeholder {
   color: #747987;
@@ -1977,7 +1977,7 @@ html.companion-window-mode #root {
   align-items: center;
   gap: 4px;
   color: #777d8a;
-  font-size: 7px;
+  font-size: 9px;
 }
 .companion-compose-bottom > span svg {
   color: #80cfa8;
@@ -2212,9 +2212,9 @@ html.companion-window-mode #root {
 .companion-model-control {
   flex: none;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
-  gap: 5px;
+  gap: 6px;
   margin: 6px 9px 0;
   padding: 6px 7px;
   border: 1px solid #30313d;
@@ -2235,33 +2235,42 @@ html.companion-window-mode #root {
 .companion-model-control select {
   width: 100%;
   min-width: 0;
-  height: 28px;
-  padding: 0 6px;
+  height: 36px;
+  padding: 0 8px;
   border: 1px solid #3a3b48;
   border-radius: 6px;
   background: #101116;
   color: #dcdeea;
-  font-size: 8px;
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.companion-model-control button {
-  height: 28px;
-  min-width: 39px;
-  padding: 0 7px;
-  border: 1px solid #3c394f;
-  border-radius: 6px;
+.companion-model-source { display: flex; border: 1px solid #3c394f; border-radius: 8px; overflow: hidden; }
+.companion-model-source button {
+  height: 36px;
+  min-width: 52px;
+  padding: 0 10px;
+  border: 0;
+  border-right: 1px solid #3c394f;
   background: #242330;
   color: #bcb5ff;
-  font-size: 8px;
+  font-size: 11px;
   cursor: pointer;
 }
-.companion-model-control button:disabled { opacity: .5; cursor: default; }
+.companion-model-source button:last-child { border-right: 0; }
+.companion-model-source button.is-active { background: #4b4580; color: #fff; }
+.companion-model-source button:disabled { opacity: .5; cursor: default; }
 .companion-model-route-note,
 .companion-model-notice {
   flex: none;
   margin: 3px 11px 0;
   color: #858997;
-  font-size: 7px;
+  font-size: 9px;
   line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .companion-model-notice { color: #a7a0e6; }
 .companion-model-control optgroup { color: #a8a2ee; }

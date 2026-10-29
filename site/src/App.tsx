@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointer
 import { RobotHead, type RobotHeadState } from "robot-heads";
 import { BrainWorkspace } from "./BrainWorkspace";
 import { CompanionVoice } from "./CompanionVoice";
+import { truncateModelId, modelSource, ollamaEmptyHint, isAdapterConnectMessage } from "./companion-helpers.mjs";
 import {
   CompanionNav,
   CompanionPanel,
@@ -1327,6 +1328,7 @@ function CompanionApp() {
   const [ollamaModels, setOllamaModels] = useState<string[]>([]);
   const [modelNotice, setModelNotice] = useState("");
   const [modelCatalogBusy, setModelCatalogBusy] = useState<"free" | "ollama" | null>(null);
+  const [showNextMove, setShowNextMove] = useState(false);
   const [sharedTab, setSharedTab] = useState<SharedBrowserTab | null>(null);
   const [error, setError] = useState("");
   const openRouterModels = freeModels.filter((id) => id !== "openrouter/free");
@@ -1474,7 +1476,7 @@ function CompanionApp() {
       setOllamaModels(found);
       setModelNotice(found.length
         ? `Found ${found.length} local Ollama model${found.length === 1 ? "" : "s"}. Local tasks are not delegated to Hermes.`
-        : "Ollama is running, but there are no installed local models yet.");
+        : ollamaEmptyHint());
     } catch (reason) {
       setOllamaModels([]);
       setModelNotice(reason instanceof Error ? reason.message : "Could not reach Ollama at 127.0.0.1:11434.");
@@ -1671,7 +1673,7 @@ function CompanionApp() {
             <div className="companion-model-control">
               <label>
                 <span>MODEL</span>
-                <select value={brain.settings.model} onChange={(event) => changeSelectedModel(event.target.value)} aria-label="Select task model">
+                <select value={brain.settings.model} onChange={(event) => changeSelectedModel(event.target.value)} aria-label="Select task model" title={brain.settings.model}>
                   <optgroup label="OpenRouter free · Hermes delegation">
                     <option value="openrouter/free">openrouter/free · automatic free routing</option>
                   </optgroup>
@@ -1692,20 +1694,29 @@ function CompanionApp() {
                     {otherLocalModels.map((id) => <option key={id} value={id}>{id}</option>)}
                   </optgroup>
                   {!new Set(["openrouter/free", ...freeModels, ...ollamaModels]).has(brain.settings.model) && (
-                    <option value={brain.settings.model}>{brain.settings.model} · saved choice (refresh list)</option>
+                    <option value={brain.settings.model}>{truncateModelId(brain.settings.model)} · saved choice</option>
                   )}
                 </select>
               </label>
-              <button type="button" onClick={() => void refreshFreeModels()} disabled={modelCatalogBusy !== null} title="Load zero-price OpenRouter model IDs" aria-label="Load free OpenRouter models">{modelCatalogBusy === "free" ? "…" : "Free"}</button>
-              <button type="button" onClick={() => void refreshOllamaModels()} disabled={modelCatalogBusy !== null} title="Find installed Ollama models on this PC" aria-label="Find local Ollama models">{modelCatalogBusy === "ollama" ? "…" : "Local"}</button>
+              <div className="companion-model-source" role="group" aria-label="Model source">
+                <button type="button" className={modelSource(brain.settings.model) === "free" ? "is-active" : ""} onClick={() => void refreshFreeModels()} disabled={modelCatalogBusy !== null} title="Load zero-price OpenRouter model IDs" aria-label="Load free OpenRouter models">{modelCatalogBusy === "free" ? "…" : "Free"}</button>
+                <button type="button" className={modelSource(brain.settings.model) === "local" ? "is-active" : ""} onClick={() => void refreshOllamaModels()} disabled={modelCatalogBusy !== null} title="Find installed Ollama models on this PC (127.0.0.1:11434)" aria-label="Find local Ollama models">{modelCatalogBusy === "ollama" ? "…" : "Local"}</button>
+              </div>
             </div>
-            <div className="companion-model-route-note">
+            <div className="companion-model-route-note" title={brain.settings.model}>
               {brain.settings.model.startsWith("ollama:")
-                ? "Direct local inference. Prompts stay on this PC; Hermes sub-agents are not used."
-                : `Hermes will coordinate tasks using ${brain.settings.model || "openrouter/free"}. Free provider limits vary.`}
+                ? `Direct local inference with ${truncateModelId(brain.settings.model)}. Prompts stay on this PC; Hermes sub-agents are not used.`
+                : `Hermes will coordinate tasks using ${truncateModelId(brain.settings.model || "openrouter/free")}. Free provider limits vary.`}
             </div>
             {modelNotice && <div className="companion-model-notice" role="status">{modelNotice}</div>}
-            {brain.nextMove && <button className="companion-inline-next" onClick={() => setDraft(brain.nextMove)}><span>NEXT MOVE</span><b>{brain.nextMove}</b><small>Tap to use in chat · suggestion only</small></button>}
+            {brain.nextMove && (
+              <div className="companion-next-wrap">
+                <button type="button" className="companion-next-toggle" onClick={() => setShowNextMove((v) => !v)} aria-expanded={showNextMove}>
+                  <span>NEXT MOVE</span><b>{truncateModelId(brain.nextMove, 56)}</b><i>{showNextMove ? "▴" : "▾"}</i>
+                </button>
+                {showNextMove && <button className="companion-inline-next" onClick={() => setDraft(brain.nextMove)}><span>NEXT MOVE</span><b>{brain.nextMove}</b><small>Tap to use in chat · suggestion only</small></button>}
+              </div>
+            )}
             <div className="companion-feed" ref={feedRef} aria-live="polite">
               {messages.map((message) => (
                 <article
@@ -1728,6 +1739,9 @@ function CompanionApp() {
                     </time>
                   </div>
                   <p>{message.text}</p>
+                  {message.role === "system" && isAdapterConnectMessage(message.text) && (
+                    <button type="button" className="companion-banner-action" onClick={openDashboard}>Open dashboard → Bridge setup</button>
+                  )}
                   {message.delegates?.length ? (
                     <div className="companion-delegates">
                       {message.delegates.map((delegate) => (

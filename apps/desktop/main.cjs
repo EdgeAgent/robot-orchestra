@@ -1035,8 +1035,8 @@ function clampCompanionBounds(bounds, area = workAreaFor(bounds)) {
 }
 function companionBounds(expanded, current) {
   const area = workAreaFor(current);
-  const width = Math.min(expanded ? 440 : 104, area.width);
-  const height = Math.min(expanded ? 660 : 104, area.height);
+  const width = Math.min(expanded ? 520 : 104, area.width);
+  const height = Math.min(expanded ? 780 : 104, area.height);
   const preferred = current
     ? { ...current, width, height }
     : { x: area.x + area.width - width - 20, y: area.y + area.height - height - 20, width, height };
