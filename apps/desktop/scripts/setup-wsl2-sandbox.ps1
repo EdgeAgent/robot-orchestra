@@ -4,7 +4,7 @@
 #  1. Checks WSL is installed; installs it (default Ubuntu) if missing.
 #  2. Checks Ubuntu is present; if not, installs it.
 #  3. Prints the next steps: install SPACE inside WSL2, start the voice
-#     server on 127.0.0.1:8765, checkout voice-control-v1, run the demo.
+#     server on 127.0.0.1:8766, checkout voice-control-v1, run the demo.
 # It does NOT touch the main Windows desktop, does NOT open any port
 # to the network, and does NOT install anything on the main desktop
 # except WSL2 itself. All agent screens stay inside WSL2, loopback only.
@@ -38,7 +38,7 @@ Write-Host ""
 Write-Host "=== Next steps (inside WSL2 Ubuntu) ===" -ForegroundColor Cyan
 Write-Host "1. git checkout voice-control-v1   (in your robot-orchestra repo)"
 Write-Host "2. Install SPACE in WSL2, per its own docs, loopback only."
-Write-Host "3. Start the local voice server: Moonshine STT + Piper TTS on 127.0.0.1:8765"
+Write-Host "3. Start the local voice server: Moonshine STT + Piper TTS on 127.0.0.1:8766"
 Write-Host "4. Run: node apps/desktop/demo-m1.cjs   (rehearsal, no sends)"
 Write-Host "5. Run the Electron app on that branch and watch Agent 1 + Agent 2 screens in noVNC:"
 Write-Host "   Agent 1: http://127.0.0.1:6081/vnc.html"

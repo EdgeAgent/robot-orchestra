@@ -32,7 +32,7 @@ test("sandbox host: stopping one agent leaves the other running", () => {
 test("voice server: loopback only, non-loopback rejected", () => {
   assert.equal(isLoopbackHost("127.0.0.1"), true);
   assert.equal(isLoopbackHost("0.0.0.0"), false);
-  assert.equal(voiceServerUrl({}), "http://127.0.0.1:8765");
+  assert.equal(voiceServerUrl({}), "http://127.0.0.1:8766");
   assert.throws(() => voiceServerConfig({ host: "example.com" }), /loopback only/);
   const h = healthResponse({}, {});
   assert.equal(h.micAutoStart, false);

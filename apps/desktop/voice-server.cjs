@@ -3,7 +3,7 @@
  * Robot Orchestra — local voice server, v1.
  *
  * How it runs on Kevin's machine, as a dev would set it up there:
- *  - One small server on loopback only: http://127.0.0.1:8765
+ *  - One small server on loopback only: http://127.0.0.1:8766
  *  - STT: Moonshine (streaming, tiny) or Faster-Whisper, local binary.
  *  - TTS: Piper, local binary, voice chosen in config.
  *  - Mic never auto-starts. The server only transcribes when the head
@@ -18,7 +18,7 @@
  */
 const DEFAULT_VOICE_SERVER = Object.freeze({
   host: "127.0.0.1",
-  port: 8765,
+  port: 8766, // 8766: HF realtime panel keeps ws://127.0.0.1:8765/v1/realtime
   sttEngine: "moonshine", // moonshine | faster-whisper
   ttsEngine: "piper",
   ttsVoice: "en_US-lessac-medium",

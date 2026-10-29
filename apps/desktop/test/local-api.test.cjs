@@ -345,8 +345,8 @@ async function request(urlPath, body, headers = {}) {
     assert.equal(floating.bounds.y, 796, "The collapsed head should remain fully visible at the bottom edge.");
     hotkeys.get("Control+1")();
     assert.equal(floating.bounds.x, 0, "The chat should remain on the same display after expanding.");
-    assert.equal(floating.bounds.y, 240, "The expanded chat should move upward to fit the work area.");
-    assert.equal(floating.bounds.height, 660);
+    assert.equal(floating.bounds.y, 120, "The expanded chat should move upward to fit the work area."); // 900 - 780 (chat-dock cleanup)
+    assert.equal(floating.bounds.height, 780);
     const home = await originalFetch(`http://127.0.0.1:${port}/`);
     assert.equal(home.status, 200);
     assert.match(await home.text(), /<title>Robot Orchestra<\/title>/);

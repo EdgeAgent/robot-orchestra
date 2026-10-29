@@ -42,7 +42,7 @@ risks are named at the end, with exactly what Kevin needs to provide.
    uses a plausible `space-agent start` form. If SPACE's actual CLI differs,
    that command must be corrected on the PC — it is one line, in one file.
 3. **STT/TTS binaries.** Moonshine / Faster-Whisper and Piper must be
-   installed and running on 127.0.0.1:8765 on his PC. This repo provides
+   installed and running on 127.0.0.1:8766 on his PC (HF realtime keeps 8765). This repo provides
    config + health logic, not the binaries themselves.
 4. **Mic + Windows permissions.** Electron allows audio only, but Windows
    itself must grant the app mic access, and the mic must actually hear him.
@@ -53,7 +53,7 @@ risks are named at the end, with exactly what Kevin needs to provide.
 1. His Windows PC, repo checked out on branch voice-control-v1.
 2. Run apps/desktop/scripts/setup-wsl2-sandbox.ps1 as Administrator.
 3. Install Moonshine (or Faster-Whisper) + Piper in WSL2, start them on
-   127.0.0.1:8765. Tell Pip if that port is already in use.
+   127.0.0.1:8766. Tell Pip if that port is already in use.
 4. Wake word choice: default is "robot" — tell Pip if he wants a different word.
 5. A live test window: talk to the head, try "Outreach, draft outreach
    for London plumbers", "Show Outreach", "Stop Research", and a risky

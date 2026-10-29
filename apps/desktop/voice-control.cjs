@@ -48,8 +48,8 @@ const DEFAULT_CONFIG = Object.freeze({
   ]),
   // Local-only voice endpoints. Never point these at a remote wss:// you
   // do not trust, and never start the mic on launch.
-  sttEndpoint: "http://127.0.0.1:8765/stt",
-  ttsEndpoint: "http://127.0.0.1:8765/tts",
+  sttEndpoint: "http://127.0.0.1:8766/stt", // 8766, not 8765 (HF realtime)
+  ttsEndpoint: "http://127.0.0.1:8766/tts",
   voiceEnabled: false,
 });
 
