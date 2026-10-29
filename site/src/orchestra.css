@@ -1596,16 +1596,22 @@ a:focus-visible {
   font-size: 15px;
 }
 
-/* Electron floating copilot companion */
+/* Electron floating copilot companion — circle only, no square window box.
+   The collapsed head must paint nothing outside its 92px circle: every
+   layer (html, body, #root, shell) is transparent, and the 360px body
+   min-width from the dashboard layout is cancelled, otherwise a 104px
+   companion window overflows and paints a square tile behind the orb. */
 html.companion-window-mode,
 html.companion-window-mode body,
 html.companion-window-mode #root {
   width: 100%;
   height: 100%;
-  min-width: 0;
+  min-width: 0 !important;
   min-height: 0;
   overflow: hidden;
   background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
 .companion-shell {
   width: 100vw;
@@ -1621,6 +1627,9 @@ html.companion-window-mode #root {
 }
 .companion-collapsed {
   padding: 3px;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
 }
 .companion-orb {
   width: 92px;
@@ -1630,6 +1639,10 @@ html.companion-window-mode #root {
   place-items: center;
   border: 1px solid #9b91ff82;
   border-radius: 50%;
+  /* Circle clip, not just border-radius: any square SVG/PNG canvas painted
+     by the head inside the button is cut to the circle, so no square
+     corners can ever show around the head. */
+  clip-path: circle(50% at 50% 50%);
   padding: 0;
   overflow: hidden;
   color: inherit;
@@ -1658,6 +1671,12 @@ html.companion-window-mode #root {
 .companion-orb > span:first-child {
   transform: translateY(1px);
   filter: drop-shadow(0 4px 8px #090a14a3);
+}
+.companion-orb svg,
+.companion-orb img {
+  display: block;
+  border-radius: 50%;
+  background: transparent !important;
 }
 .companion-orb-light {
   position: absolute;
