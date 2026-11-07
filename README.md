@@ -39,7 +39,23 @@
   <a href="#robot-heads-react-library">React library</a>
 </p>
 
-> **Windows app:** Download the latest per-user Windows x64 installer from [GitHub Releases](https://github.com/EdgeAgent/robot-orchestra/releases/latest). Run the setup wizard, choose **Install**, and finish to launch; no administrator access is needed. The installer is unsigned, so Windows may show a SmartScreen warning. Chrome/Edge still require the separate one-time unpacked-extension step while store listings are pending. The app does not bundle Hermes or grant desktop-control permissions.
+> **Windows app:** Download the latest per-user Windows installer (x64 or ARM64) from [GitHub Releases](https://github.com/EdgeAgent/robot-orchestra/releases/latest). Run the setup wizard, choose **Install**, and finish to launch; no administrator access is needed. The installer is unsigned, so Windows may show a SmartScreen warning. Chrome/Edge still require the separate one-time unpacked-extension step while store listings are pending. The app does not bundle Hermes or grant desktop-control permissions.
+
+## Current release — 0.7.0 Preview
+
+**[Download the 0.7.0 Preview](https://github.com/EdgeAgent/robot-orchestra/releases/tag/v0.7.0)** — the same build served at [getrobotorchestra.com](https://getrobotorchestra.com).
+
+- Coordinator-led agent team — Roboto delegates to **Scout**, **Builder** and **Reviewer**, each working in its own watchable sandbox screen
+- **Ollama auto-connect** at startup — local-first, your machine does the thinking
+- Windows installers for **x64** and **ARM64**, plus the companion browser extension (v0.3.0)
+
+| File | SHA-256 |
+| --- | --- |
+| `Robot-Orchestra-Setup-0.7.0-x64.exe` | `756ec5707c1636868de066c1b804ae2cfd4d8c34e0400eed4578ed7c269719f5` |
+| `Robot-Orchestra-Setup-0.7.0-arm64.exe` | `bc0c322299d2f9822ffab7bee94b1412ddd33b1e583661de1c28e29465b44f90` |
+| `Robot-Orchestra-Browser-Extension-0.3.0.zip` | `06735c219879653bd3a7f7de5491a0f31c673f4fef11eb5e85a664c19fad4b08` |
+
+The installers are not code-signed yet, so Windows SmartScreen may warn on first run — signing is in progress.
 
 ## Robot Orchestra
 
@@ -83,7 +99,7 @@ The editable Mermaid source is [`docs/robot-orchestra-architecture.mmd`](docs/ro
 
 ### Quick start on Windows
 
-1. Download **Robot-Orchestra-Setup-0.6.0-x64.exe** from [Latest Releases](https://github.com/EdgeAgent/robot-orchestra/releases/latest), open it, follow the setup wizard, and click **Install**. On the finish page, leave **Launch Robot Orchestra** selected and click **Finish**. It installs for your Windows account without administrator rights. If a release asset is temporarily unavailable, use the [build-from-source instructions](apps/desktop/README.md#build-from-source-maintainers).
+1. Download **Robot-Orchestra-Setup-0.7.0-x64.exe** (or **Robot-Orchestra-Setup-0.7.0-arm64.exe** on ARM64 Windows) from [Latest Releases](https://github.com/EdgeAgent/robot-orchestra/releases/latest), open it, follow the setup wizard, and click **Install**. On the finish page, leave **Launch Robot Orchestra** selected and click **Finish**. It installs for your Windows account without administrator rights. If a release asset is temporarily unavailable, use the [build-from-source instructions](apps/desktop/README.md#build-from-source-maintainers).
 2. In Chrome or Edge, go to `chrome://extensions` or `edge://extensions`, enable **Developer mode**, and choose **Load unpacked**. Select the installed `resources/browser-extension` folder.
 3. For specialist delegation, connect your Hermes adapter at a `localhost` URL and use **Test connection**. Direct Ollama chat works without Hermes.
 4. Click the Robot Orchestra toolbar icon to open the browser side panel. Choose **Scan this site** if you want a bounded crawl (10/25/50 pages), review its text preview, and tick **Include this scan in my next message** only when you want to send that excerpt to the selected model. Or share one page / selected text directly.
