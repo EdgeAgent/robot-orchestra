@@ -41,6 +41,10 @@
 
 > **Windows app:** Download the latest per-user Windows installer (x64 or ARM64) from [GitHub Releases](https://github.com/EdgeAgent/robot-orchestra/releases/latest). Run the setup wizard, choose **Install**, and finish to launch; no administrator access is needed. The installer is unsigned, so Windows may show a SmartScreen warning. Chrome/Edge still require the separate one-time unpacked-extension step while store listings are pending. The app does not bundle Hermes or grant desktop-control permissions.
 
+## Robot Orchestra V2 — the paid expansion
+
+**V2 is out — $8.99, one time, at [getrobotorchestra.com](https://getrobotorchestra.com).** The first 100 buyers are the founding cohort: every update for a year is included, and the unlock never expires. V2 adds a real license-key unlock with three premium features — **Scout** research briefs, **Council Mode**, and the **premium voice conversation** — plus premium **Kokoro voices**, Watchers, one-click Packs and a Scores screen. V2 is not a public download: buy it on the site and we email you the V2 download and your founding key, usually within a few hours. Everything in this free release stays free.
+
 ## Current release — 0.7.0 Preview
 
 **[Download the 0.7.0 Preview](https://github.com/EdgeAgent/robot-orchestra/releases/tag/v0.7.0)** — the same build served at [getrobotorchestra.com](https://getrobotorchestra.com).
