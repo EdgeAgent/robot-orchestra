@@ -43,7 +43,13 @@
 
 ## Robot Orchestra V2 — the paid expansion
 
-**V2 is out — $8.99, one time, at [getrobotorchestra.com](https://getrobotorchestra.com).** The first 100 buyers are the founding cohort: every update for a year is included, and the unlock never expires. V2 adds a real license-key unlock with three premium features — **Scout** research briefs, **Council Mode**, and the **premium voice conversation** — plus premium **Kokoro voices**, Watchers, one-click Packs and a Scores screen. V2 is not a public download: buy it on the site and we email you the V2 download and your founding key, usually within a few hours. Everything in this free release stays free.
+**V2 is out — $8.99, one time, at [getrobotorchestra.com](https://getrobotorchestra.com).** V2 is a paid add-on to this free release, unlocked with a real license key. Here is what the $8.99 adds:
+
+- **Premium Kokoro voices** — Roboto's premium spoken voice (the free builds use Piper)
+- **Scout Research** — the research feature
+- **Council sessions** — multi-agent sessions that work a question through to a consensus
+
+Founding terms: $8.99 one time for the first 100 buyers, every update for a year included, and the unlock never expires. V2 is not a public download: buy it on the site and we email you the V2 download and your founding key, usually within a few hours. Everything in this free release stays free.
 
 ## Current release — 0.7.0 Preview
 
