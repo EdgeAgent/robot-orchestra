@@ -49,6 +49,8 @@
 - **Scout Research** — the research feature
 - **Council sessions** — multi-agent sessions that work a question through to a consensus
 
+Why it's better: 0.7.2 can never be unlocked — its key system is only a placeholder, so there is nothing to buy for it. V2 has the real license key built in, so buying actually gets you something: Roboto sounds better with the premium Kokoro voices, Scout Research and Council sessions only exist as working features in V2, and the V2 browser-extension zip fixes a file the side panel needs that was missing from the 0.7.2 zip.
+
 Founding terms: $8.99 one time for the first 100 buyers, every update for a year included, and the unlock never expires. V2 is not a public download: buy it on the site and we email you the V2 download and your founding key, usually within a few hours. Everything in this free release stays free.
 
 ## Current release — 0.7.0 Preview
