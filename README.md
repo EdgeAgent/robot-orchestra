@@ -53,19 +53,21 @@ Why it's better: 0.7.2 can never be unlocked — its key system is only a placeh
 
 Founding terms: $8.99 one time for the first 100 buyers, every update for a year included, and the unlock never expires. After the founding 100 are gone, V2 moves to $4.99/month for new buyers — that monthly price is not available yet. V2 is not a public download: buy it on the site and we email you the V2 download and your founding key, usually within a few hours. Everything in this free release stays free.
 
-## Current release — 0.7.0 Preview
+## Current release — 0.7.2
 
-**[Download the 0.7.0 Preview](https://github.com/EdgeAgent/robot-orchestra/releases/tag/v0.7.0)** — the same build served at [getrobotorchestra.com](https://getrobotorchestra.com).
+**[Download 0.7.2](https://github.com/EdgeAgent/robot-orchestra/releases/tag/v0.7.2)** — the Latest release on GitHub, and the same build served at [getrobotorchestra.com](https://getrobotorchestra.com).
 
 - Coordinator-led agent team — Roboto delegates to **Scout**, **Builder** and **Reviewer**, each working in its own watchable sandbox screen
 - **Ollama auto-connect** at startup — local-first, your machine does the thinking
+- **Approval pop-ups** — a plan big enough to need approval appears on screen with Accept / Decline; nothing runs until you say so
+- **In-app update notices** — the app tells you when a newer version is out (a notice only; it never downloads or installs anything by itself)
 - Windows installers for **x64** and **ARM64**, plus the companion browser extension (v0.3.0)
 
 | File | SHA-256 |
 | --- | --- |
-| `Robot-Orchestra-Setup-0.7.0-x64.exe` | `756ec5707c1636868de066c1b804ae2cfd4d8c34e0400eed4578ed7c269719f5` |
-| `Robot-Orchestra-Setup-0.7.0-arm64.exe` | `bc0c322299d2f9822ffab7bee94b1412ddd33b1e583661de1c28e29465b44f90` |
-| `Robot-Orchestra-Browser-Extension-0.3.0.zip` | `06735c219879653bd3a7f7de5491a0f31c673f4fef11eb5e85a664c19fad4b08` |
+| `Robot-Orchestra-Setup-0.7.2-x64.exe` | `fdfac54fd0b5bbc95a18d68fcfa8fb598fb3f7c749f26089fba4abe0ff6a9cd2` |
+| `Robot-Orchestra-Setup-0.7.2-arm64.exe` | `cabaae1c158f849b32347e811640a0dbba0135c28ea8858edcb1855d4f9ebd8f` |
+| `Robot-Orchestra-Browser-Extension-0.3.0.zip` | `77af13bbbbdaa253a19f513af6d95646f5f880e620bd1f28c9567a14cffb29a7` |
 
 The installers are not code-signed yet, so Windows SmartScreen may warn on first run — signing is in progress.
 
